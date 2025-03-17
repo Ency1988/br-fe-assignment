@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -17,8 +17,12 @@ import { RuleComponent } from '../rule/rule.component';
   styleUrl: './step.component.scss',
 })
 export class StepComponent {
-  public eventTypes = input.required<string[]>();
+  public eventsMap = input.required<Record<string, string[]>>();
   public stepFormGroup = input.required<FormGroup>();
+
+  public eventsTypes = computed<string[]>(() => {
+    return Object.keys(this.eventsMap());
+  });
 
   constructor(private fb: FormBuilder) {}
 
@@ -47,5 +51,11 @@ export class StepComponent {
       return control;
     }
     throw Error('control must be an Control');
+  }
+
+  getAttributesForEvent() {
+    const selectedEvent = this.stepFormGroup().get('eventType')
+      ?.value as string;
+    return this.eventsMap()[selectedEvent];
   }
 }

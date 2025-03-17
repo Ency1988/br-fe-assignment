@@ -9,5 +9,6 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class RuleComponent {
   public ruleFormGroup = input.required<any>();
+  public supportedAttributes = input.required<string[]>();
   public removeRule = output<void>();
 }

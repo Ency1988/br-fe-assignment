@@ -1,22 +1,27 @@
 <select [formControl]="transformType(stepFormGroup().get('eventType'))">
   <option disabled value>Select an event</option>
-  @for (eventType of eventTypes(); track eventType) {
+  @for (eventType of eventsTypes(); track eventType) {
     <option [value]="eventType">{{ eventType }}</option>
   }
 </select>
 @if (stepFormGroup().get("eventType")?.value && rules.controls.length === 0) {
   <button (click)="addRule()">Refine rule</button>
-} @else {
-  <form [formGroup]="stepFormGroup()!">
-    <div formArrayName="rules">
-      @for (rule of rules.controls; track rule) {
-        <div [formGroupName]="$index">
-          <app-rule
-            (removeRule)="removeRule($index)"
-            [ruleFormGroup]="rules.controls.at($index)"
-          ></app-rule>
-        </div>
-      }
-    </div>
-  </form>
+}
+@if (rules.controls.length > 0) {
+  <div>
+    <form [formGroup]="stepFormGroup()!">
+      <div formArrayName="rules">
+        @for (rule of rules.controls; track rule) {
+          <div [formGroupName]="$index">
+            <app-rule
+              (removeRule)="removeRule($index)"
+              [ruleFormGroup]="rules.controls.at($index)"
+              [supportedAttributes]="getAttributesForEvent()"
+            ></app-rule>
+          </div>
+        }
+      </div>
+    </form>
+    <button (click)="addRule()">Refine More</button>
+  </div>
 }

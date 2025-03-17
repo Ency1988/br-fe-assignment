@@ -21,11 +21,19 @@ export class CustomerFilterComponent {
   public filterConfig = input<Filter[]>();
   public applyFilters = output<Step[]>();
 
-  public eventTypes = computed<string[]>(() => {
+  public eventTypes = computed<Record<string, string[]>>(() => {
     const config = this.filterConfig();
-    return Array.isArray(config) && config.length > 0
-      ? config.map((e) => e.type)
-      : [];
+    let result = {};
+    if (Array.isArray(config) && config.length > 0) {
+      result = config.reduce(
+        (acc, current) => {
+          acc[current.type] = current.properties.map((p) => p.property);
+          return acc;
+        },
+        {} as Record<string, string[]>,
+      );
+    }
+    return result;
   });
 
   public stepsForm: FormGroup;
@@ -57,6 +65,8 @@ export class CustomerFilterComponent {
     }
     throw Error('control must be an Group');
   }
+
+  public addStep(): void {}
 
   onApplyFilters() {
     console.log('onApplyFilters');

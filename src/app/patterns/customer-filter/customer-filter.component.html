@@ -3,7 +3,7 @@
 <div class="steps-container">
   @for (step of steps.controls; track step) {
     <app-step
-      [eventTypes]="eventTypes()"
+      [eventsMap]="eventTypes()"
       [stepFormGroup]="transformType(step)"
     ></app-step>
   }
