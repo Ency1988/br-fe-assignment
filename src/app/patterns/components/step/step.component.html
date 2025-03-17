@@ -1,13 +1,13 @@
-<select [formControl]="eventTypeControl">
+<select [formControl]="transformType(stepFormGroup().get('eventType'))">
   <option disabled value>Select an event</option>
   @for (eventType of eventTypes(); track eventType) {
     <option [value]="eventType">{{ eventType }}</option>
   }
 </select>
-@if (eventTypeControl.value && rules.controls.length === 0) {
+@if (stepFormGroup().get("eventType")?.value && rules.controls.length === 0) {
   <button (click)="addRule()">Refine rule</button>
 } @else {
-  <form [formGroup]="ruleForm" (ngSubmit)="submit()">
+  <form [formGroup]="stepFormGroup()!">
     <div formArrayName="rules">
       @for (rule of rules.controls; track rule) {
         <div [formGroupName]="$index">
@@ -18,7 +18,5 @@
         </div>
       }
     </div>
-    <button type="button" (click)="addRule()">Add Rule</button>
-    <button type="submit" (click)="showRules()">Submit</button>
   </form>
 }

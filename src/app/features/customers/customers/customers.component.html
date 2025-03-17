@@ -1,2 +1,5 @@
 <div>Filters</div>
-<app-customer-filter [filterConfig]="filterConfig()"></app-customer-filter>
+<app-customer-filter
+  [filterConfig]="filterConfig()"
+  (applyFilters)="showFilters($event)"
+></app-customer-filter>

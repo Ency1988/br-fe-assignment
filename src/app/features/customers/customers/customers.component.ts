@@ -13,4 +13,8 @@ import { CustomerFilterComponent } from '../../../patterns/customer-filter/custo
 export class CustomersComponent {
   public customerRepository = inject(CustomersRepository);
   public filterConfig = toSignal(this.customerRepository.getFilterConfigData());
+
+  public showFilters(filters: any) {
+    console.log();
+  }
 }

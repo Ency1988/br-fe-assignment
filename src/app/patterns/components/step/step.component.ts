@@ -4,10 +4,10 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  isFormControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Rule } from '../../../core/models/condition.model';
 import { RuleComponent } from '../rule/rule.component';
 
 @Component({
@@ -18,28 +18,19 @@ import { RuleComponent } from '../rule/rule.component';
 })
 export class StepComponent {
   public eventTypes = input.required<string[]>();
+  public stepFormGroup = input.required<FormGroup>();
 
-  public eventTypeControl = new FormControl();
-
-  ////
-
-  ruleForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
-    this.ruleForm = this.fb.group({
-      rules: this.fb.array([]), // Initialize as empty FormArray
-    });
-  }
+  constructor(private fb: FormBuilder) {}
 
   get rules(): FormArray {
-    return this.ruleForm.get('rules') as FormArray;
+    return this.stepFormGroup()!.get('rules') as FormArray;
   }
 
   createRule(): FormGroup {
     return this.fb.group({
       field: ['', Validators.required],
       operator: ['', Validators.required],
-      value: ['', Validators.required], // Change based on value type
+      value: ['', Validators.required],
     });
   }
 
@@ -51,14 +42,10 @@ export class StepComponent {
     this.rules.removeAt(index);
   }
 
-  submit(): void {
-    if (this.ruleForm.valid) {
-      const rules: Rule[] = this.ruleForm.value.rules;
-      console.log('Submitted Rules:', rules);
+  public transformType(control: unknown): FormControl {
+    if (isFormControl(control)) {
+      return control;
     }
-  }
-
-  showRules() {
-    console.log(this.ruleForm);
+    throw Error('control must be an Control');
   }
 }

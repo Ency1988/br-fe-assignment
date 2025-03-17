@@ -1,9 +1,12 @@
 <div>Customer filter</div>
 
 <div class="steps-container">
-  @for (step of steps(); track step.value) {
-    <app-step [eventTypes]="eventTypes()"></app-step>
+  @for (step of steps.controls; track step) {
+    <app-step
+      [eventTypes]="eventTypes()"
+      [stepFormGroup]="transformType(step)"
+    ></app-step>
   }
 </div>
 
-<button (click)="applyFilters.emit([])">Apply Filters</button>
+<button (click)="onApplyFilters()">Apply Filters</button>
