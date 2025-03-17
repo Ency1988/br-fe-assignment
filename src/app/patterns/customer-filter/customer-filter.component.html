@@ -1,1 +1,9 @@
-<p>customer-filter works!</p>
+<div>Customer filter</div>
+
+<div class="steps-container">
+  @for (step of steps(); track step.value) {
+    <app-step [eventTypes]="eventTypes()"></app-step>
+  }
+</div>
+
+<button (click)="applyFilters.emit([])">Apply Filters</button>

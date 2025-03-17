@@ -1,17 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-
-interface Filter {
-  type: string;
-  properties: { property: string; type: string }[];
-}
+import { Filter } from '../models/filter.model';
 
 @Injectable()
 export class CustomersRepository {
   private httpClient = inject(HttpClient);
 
-  public getFiltersData(): Observable<Filter[]> {
+  public getFilterConfigData(): Observable<Filter[]> {
     return this.httpClient
       .get<{
         events: Filter[];

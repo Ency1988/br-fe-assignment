@@ -1,0 +1,11 @@
+<ng-container [formGroup]="ruleFormGroup()">
+  <input formControlName="field" placeholder="Field" />
+  <select formControlName="operator">
+    <option value="=">=</option>
+    <option value="!=">!=</option>
+    <option value=">">></option>
+    <option value="<"><</option>
+  </select>
+  <input formControlName="value" placeholder="Value" />
+  <button type="button" (click)="removeRule.emit()">Remove</button>
+</ng-container>
