@@ -53,7 +53,9 @@ export class CustomerFilterComponent {
     throw Error('control must be an Group');
   }
 
-  public addStep(): void {}
+  public addStep(): void {
+    this.steps.push(this.createStep());
+  }
 
   onApplyFilters() {
     console.log('onApplyFilters');
