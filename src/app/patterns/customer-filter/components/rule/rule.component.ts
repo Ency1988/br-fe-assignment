@@ -80,7 +80,6 @@ export class RuleComponent implements OnInit {
             this.supportedAttributes().find((x) => x.property === v)?.type!;
           const defaultValue =
             expectedAttributeType === 'string' ? 'equals' : 'equal to';
-          console.log('setDefaultValueForOperator', defaultValue);
           this.ruleFormGroup().get('operator')?.setValue(defaultValue);
         }
       });
@@ -98,13 +97,10 @@ export class RuleComponent implements OnInit {
         if (operatorType && operatorValue !== this.controlTypeToUse()) {
           const valueField = this.ruleFormGroup().controls['value'];
 
-          // TODO: Extract default value setting into custom control
           if (operatorType === 'string') {
-            console.log('setDefaultValueForField String');
             valueField.setValue('');
-            console.log('setDefaultValueForField Number');
           } else if (operatorType === 'number') {
-            // valueField.setValue(0);
+            valueField.setValue(0);
           }
           this.controlTypeToUse.set(operatorType);
         }

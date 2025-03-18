@@ -29,10 +29,6 @@ export class CustomerFilterComponent {
     this.stepsForm = this.fb.group({
       steps: this.fb.array([this.createStep()]),
     });
-
-    this.stepsForm.valueChanges.subscribe(() => {
-      console.log('stepsForm', this.stepsForm.value);
-    });
   }
 
   public createStep(): FormGroup {
@@ -58,7 +54,7 @@ export class CustomerFilterComponent {
   }
 
   onApplyFilters() {
-    console.log('onApplyFilters');
+    console.log('RESULT');
     console.log(this.stepsForm.value);
   }
 

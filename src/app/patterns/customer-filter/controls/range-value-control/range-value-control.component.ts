@@ -38,7 +38,6 @@ export class RangeValueControlComponent
         map((v) => [v[0] || 0, v[1] || 0] as [number, number]),
       )
       .subscribe((v) => {
-        console.log(v, 'STILL');
         this.valueChange(v);
       });
   }
