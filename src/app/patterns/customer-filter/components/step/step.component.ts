@@ -36,6 +36,7 @@ export class StepComponent {
   >();
 
   public removeStep = output<void>();
+  public copyStep = output<void>();
 
   public eventsTypes = computed<string[]>(() => {
     return this.filterConfig().map((x) => x.type);

@@ -5,7 +5,7 @@
     <span class="material-symbols-outlined">edit</span>
   </div>
   <div class="action-buttons">
-    <button>
+    <button (click)="copyStep.emit()">
       <span class="material-symbols-outlined">content_copy</span>
     </button>
     @if (isRemovalAllowed()) {
@@ -19,7 +19,6 @@
 <div class="form-part">
   <app-searchable-dropdown
     [formControl]="transformType(stepFormGroup().get('eventType'))"
-    [isOpen]="true"
     [options]="eventsTypes()"
   >
   </app-searchable-dropdown>

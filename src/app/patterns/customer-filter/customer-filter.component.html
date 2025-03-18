@@ -11,6 +11,7 @@
       [filterConfig]="filterConfig()"
       [stepFormGroup]="transformType(step)"
       (removeStep)="removeStep($index)"
+      (copyStep)="copyStep($index)"
     ></app-step>
   }
   <div class="add-step-container">
