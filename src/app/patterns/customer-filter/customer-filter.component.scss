@@ -1,13 +1,19 @@
 :host {
   display: flex;
   flex-direction: column;
-  background-color: #F8F7FE;
+  align-items: flex-start;
+  background-color: var(--color-gray-light);
   padding: 16px 24px;
   margin: 32px 16px;
   border-radius: 8px;
   gap: 16px;
 
   .steps-container {
+    width: 100%;
     background-color: #fff;
+  }
+
+  .discard {
+    align-self: flex-end;
   }
 }

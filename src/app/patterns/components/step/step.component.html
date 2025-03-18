@@ -1,11 +1,17 @@
-<select [formControl]="transformType(stepFormGroup().get('eventType'))">
-  <option disabled value>Select an event</option>
-  @for (eventType of eventsTypes(); track eventType) {
-    <option [value]="eventType">{{ eventType }}</option>
-  }
-</select>
+<!--<select ">-->
+<!--  <option disabled value>Select an event</option>-->
+<!--  @for (eventType of eventsTypes(); track eventType) {-->
+<!--    <option [value]="eventType">{{ eventType }}</option>-->
+<!--  }-->
+<!--</select>-->
+<app-searchable-dropdown
+  [formControl]="transformType(stepFormGroup().get('eventType'))"
+  [isOpen]="true"
+  [options]="eventsTypes()"
+>
+</app-searchable-dropdown>
 @if (stepFormGroup().get("eventType")?.value && rules.controls.length === 0) {
-  <button (click)="addRule()">Refine rule</button>
+  <button class="btn btn-accent" (click)="addRule()">Refine rule</button>
 }
 @if (rules.controls.length > 0) {
   <div>
@@ -22,6 +28,6 @@
         }
       </div>
     </form>
-    <button (click)="addRule()">Refine More</button>
+    <button class="btn btn-accent" (click)="addRule()">Refine More</button>
   </div>
 }

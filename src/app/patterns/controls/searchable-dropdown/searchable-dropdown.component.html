@@ -1,0 +1,37 @@
+<div class="dropdown-control" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+  <span>{{ value() || placeholder() }}</span>
+  <span>X</span>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayOffsetY]="8"
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  (backdropClick)="closePanel()"
+  (detach)="closePanel()"
+>
+  <ul class="dropdown-panel">
+    @if (options().length > 0) {
+      <div class="search-box">
+        <span class="badge">{{ parentBadge() }}</span>
+        <input
+          type="text"
+          [placeholder]="filterPlaceholder()"
+          (input)="handleFilterChange($event)"
+        />
+      </div>
+    }
+    @for (option of filteredOptions(); track option) {
+      <li
+        role="option"
+        [class.selected]="value() === option"
+        (click)="setValue(option)"
+      >
+        {{ option }}
+      </li>
+    }
+  </ul>
+</ng-template>

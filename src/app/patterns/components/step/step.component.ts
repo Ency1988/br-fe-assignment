@@ -10,10 +10,11 @@ import {
 } from '@angular/forms';
 import { RuleComponent } from '../rule/rule.component';
 import type { Filter } from '../../../core/models/filter.model';
+import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
   selector: 'app-step',
-  imports: [ReactiveFormsModule, RuleComponent],
+  imports: [ReactiveFormsModule, RuleComponent, SearchableDropdownComponent],
   templateUrl: './step.component.html',
   styleUrl: './step.component.scss',
 })
@@ -42,14 +43,14 @@ export class StepComponent {
     FormGroup<{
       field: FormControl<string | null>;
       operator: FormControl<string | null>;
-      value: FormControl<string | null>;
+      value: FormControl<string | number | null>;
     }>
   > {
     return this.stepFormGroup()!.get('rules') as FormArray<
       FormGroup<{
         field: FormControl<string | null>;
         operator: FormControl<string | null>;
-        value: FormControl<string | null>;
+        value: FormControl<string | number | null>;
       }>
     >;
   }
@@ -57,12 +58,12 @@ export class StepComponent {
   createRule(): FormGroup<{
     field: FormControl<string | null>;
     operator: FormControl<string | null>;
-    value: FormControl<string | null>;
+    value: FormControl<string | number | null>;
   }> {
     return new FormGroup({
-      field: new FormControl('', [Validators.required]),
-      operator: new FormControl('', [Validators.required]),
-      value: new FormControl('', [Validators.required]),
+      field: new FormControl<string | null>('', [Validators.required]),
+      operator: new FormControl<string | null>('', [Validators.required]),
+      value: new FormControl<string | number | null>('', [Validators.required]),
     });
   }
 

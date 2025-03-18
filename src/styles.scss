@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import '@angular/cdk/overlay-prebuilt.css';
 
 *,
 *::before,
@@ -9,11 +10,62 @@
   padding: 0;
 }
 
+button, input, textarea, select {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+:root {
+  --color-red: #ea4d91;
+  --color-primary: #FFD501;
+  --color-accent: #40e3e3;
+  --color-text: #000;
+  --color-bg: #fff;
+  --color-border: #7c7c7c;
+  --color-gray-light: #F8F7FE;
+  --color-gray-dark: #939393;
+  --control-height: 32px;
+}
+
 body {
   font-family: Roboto, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
+  font-weight: 700;
   color: #333;
   background-color: #fff;
   -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  height: var(--control-height);
+  padding: 4px 16px;
+  cursor: pointer;
+
+  &-primary {
+    background-color: var(--color-primary);
+  }
+
+  &-accent {
+    color: var(--color-accent);
+  }
+
+  &-danger {
+    color: var(--color-red);
+  }
+}
+
+input {
+  padding: 4px 8px;
+  height: var(--control-height);
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.75);
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+select {
+  height: var(--control-height);
+  box-shadow: 0 0 3px 0 rgba(0,0,0,0.75);
 }

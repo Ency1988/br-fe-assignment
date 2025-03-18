@@ -1,4 +1,5 @@
-<div>Customer filter</div>
+<div>CUSTOMER FILTER</div>
+<button class="btn btn-danger discard">Discard filters</button>
 
 <div class="steps-container">
   @for (step of steps.controls; track step) {
@@ -10,4 +11,6 @@
   <button (click)="addStep()">Add Funnel step</button>
 </div>
 
-<button (click)="onApplyFilters()">Apply Filters</button>
+<button class="btn btn-primary" (click)="onApplyFilters()">
+  Apply Filters
+</button>
