@@ -5,12 +5,12 @@
 >
 </app-searchable-dropdown>
 
-@if (stepFormGroup().get("eventType")?.value && rules.controls.length === 0) {
+@if (stepFormGroup().value.eventType && rules.controls.length === 0) {
   <button class="btn btn-accent" (click)="addRule()">Refine rule</button>
 }
 
 @if (rules.controls.length > 0) {
-  <form class="rules-container" [formGroup]="stepFormGroup()!">
+  <form class="rules-container" [formGroup]="stepFormGroup()">
     <ng-container formArrayName="rules">
       @for (rule of rules.controls; track rule) {
         <ng-container [formGroupName]="$index">
@@ -19,6 +19,7 @@
             (removeRule)="removeRule($index)"
             [ruleFormGroup]="rules.controls.at($index)!"
             [supportedAttributes]="getAttributesForEvent()"
+            [parentEvent]="stepFormGroup().value.eventType"
           ></app-rule>
         </ng-container>
       }

@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   DestroyRef,
   inject,
   input,
@@ -9,12 +10,13 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
 
 type ControlType = 'number' | 'string' | 'numbers';
 
 @Component({
   selector: 'app-rule',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SearchableDropdownComponent],
   templateUrl: './rule.component.html',
   styleUrl: './rule.component.scss',
 })
@@ -43,8 +45,15 @@ export class RuleComponent implements OnInit {
       value: FormControl<string | number | null>;
     }>
   >();
+
+  public parentEvent = input<string>();
+
   public supportedAttributes =
     input.required<{ type: 'string' | 'number'; property: string }[]>();
+
+  public attributesValues = computed<string[]>(() =>
+    this.supportedAttributes().map((a) => a.property),
+  );
 
   public removeRule = output<void>();
 
@@ -61,7 +70,6 @@ export class RuleComponent implements OnInit {
     this.ruleFormGroup()
       .controls['field'].valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((v) => {
-        console.log(v);
         if (v) {
           const expectedAttributeType: 'string' | 'number' =
             this.supportedAttributes().find((x) => x.property === v)?.type!;

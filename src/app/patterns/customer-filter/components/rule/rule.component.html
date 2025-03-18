@@ -1,25 +1,30 @@
 <ng-container [formGroup]="ruleFormGroup()">
-  <select formControlName="field">
-    <option disabled value>Select an attribute</option>
-    @for (attribute of supportedAttributes(); track attribute.property) {
-      <option [value]="attribute.property">{{ attribute.property }}</option>
-    }
-  </select>
+  <app-searchable-dropdown
+    formControlName="field"
+    [options]="attributesValues()"
+    [isOpen]="true"
+    placeholder="Select an attribute"
+    filterPlaceholder="Filter events..."
+    [parentBadge]="parentEvent()"
+  >
+  </app-searchable-dropdown>
 
-  <select formControlName="operator">
-    @for (operator of operators; track operator) {
-      <option [value]="operator.value">{{ operator.value }}</option>
-    }
-  </select>
+  @if (ruleFormGroup().controls["field"].value) {
+    <select formControlName="operator">
+      @for (operator of operators; track operator) {
+        <option [value]="operator.value">{{ operator.value }}</option>
+      }
+    </select>
 
-  @switch (controlTypeToUse()) {
-    @case ("string") {
-      <input formControlName="value" placeholder="Value" />
+    @switch (controlTypeToUse()) {
+      @case ("string") {
+        <input formControlName="value" placeholder="Value" />
+      }
+      @case ("number") {
+        <input type="number" formControlName="value" />
+      }
+      @case ("numbers") {}
     }
-    @case ("number") {
-      <input type="number" formControlName="value" />
-    }
-    @case ("numbers") {}
   }
   <button class="remove-rule" type="button" (click)="removeRule.emit()">
     Remove
