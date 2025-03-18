@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  gap: 8px;
+
+  .remove-rule {
+    cursor: pointer;
+    color: var(--color-gray-dark);
+    visibility: hidden;
+  }
+
+  &:hover .remove-rule {
+    visibility: visible;
+  }
+}

@@ -1,18 +1,14 @@
-<!--<select ">-->
-<!--  <option disabled value>Select an event</option>-->
-<!--  @for (eventType of eventsTypes(); track eventType) {-->
-<!--    <option [value]="eventType">{{ eventType }}</option>-->
-<!--  }-->
-<!--</select>-->
 <app-searchable-dropdown
   [formControl]="transformType(stepFormGroup().get('eventType'))"
   [isOpen]="true"
   [options]="eventsTypes()"
 >
 </app-searchable-dropdown>
+
 @if (stepFormGroup().get("eventType")?.value && rules.controls.length === 0) {
   <button class="btn btn-accent" (click)="addRule()">Refine rule</button>
 }
+
 @if (rules.controls.length > 0) {
   <form class="rules-container" [formGroup]="stepFormGroup()!">
     <ng-container formArrayName="rules">
