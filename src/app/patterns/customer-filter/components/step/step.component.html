@@ -14,20 +14,21 @@
   <button class="btn btn-accent" (click)="addRule()">Refine rule</button>
 }
 @if (rules.controls.length > 0) {
-  <div>
-    <form [formGroup]="stepFormGroup()!">
-      <div formArrayName="rules">
-        @for (rule of rules.controls; track rule) {
-          <div [formGroupName]="$index">
-            <app-rule
-              (removeRule)="removeRule($index)"
-              [ruleFormGroup]="rules.controls.at($index)!"
-              [supportedAttributes]="getAttributesForEvent()"
-            ></app-rule>
-          </div>
-        }
-      </div>
-    </form>
-    <button class="btn btn-accent" (click)="addRule()">Refine More</button>
-  </div>
+  <form class="rules-container" [formGroup]="stepFormGroup()!">
+    <ng-container formArrayName="rules">
+      @for (rule of rules.controls; track rule) {
+        <ng-container [formGroupName]="$index">
+          <app-rule
+            class="rule"
+            (removeRule)="removeRule($index)"
+            [ruleFormGroup]="rules.controls.at($index)!"
+            [supportedAttributes]="getAttributesForEvent()"
+          ></app-rule>
+        </ng-container>
+      }
+      <button class="btn btn-accent refine-more" (click)="addRule()">
+        Refine More
+      </button>
+    </ng-container>
+  </form>
 }

@@ -2,4 +2,50 @@
   display: flex;
   align-items: flex-start;
   padding: 8px 16px;
+  gap: 32px;
+
+  .rules-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .rule {
+      position: relative;
+    }
+
+    .rule:first-of-type:after {
+      position: absolute;
+      content: '';
+      width: 22px;
+      height: 32px;
+      left: -27px;
+      top: -15px;
+      border-bottom: 2px solid var(--color-gray-dark);
+    }
+
+    .rule:not(:first-of-type):after {
+      position: absolute;
+      content: '';
+      width: 13px;
+      height: 48px;
+      left: -17px;
+      top: -31px;
+
+      border-bottom: 2px solid var(--color-gray-dark);
+      border-left: 2px solid var(--color-gray-dark);
+    }
+
+    .rule:not(:first-of-type):before {
+      position: absolute;
+      content: 'AND';
+      left: -58px;
+      bottom: 6px;
+      color: var(--color-gray-dark);
+    }
+
+    & > :last-child {
+      align-self: flex-start;
+      padding-left: 0;
+    }
+  }
 }
