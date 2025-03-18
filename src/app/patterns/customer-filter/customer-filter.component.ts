@@ -61,4 +61,8 @@ export class CustomerFilterComponent {
     console.log('onApplyFilters');
     console.log(this.stepsForm.value);
   }
+
+  removeStep(stepIndex: number) {
+    this.steps.removeAt(stepIndex);
+  }
 }

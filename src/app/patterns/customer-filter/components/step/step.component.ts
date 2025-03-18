@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -19,6 +19,8 @@ import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/
   styleUrl: './step.component.scss',
 })
 export class StepComponent {
+  public index = input<number | null>(null);
+  public isRemovalAllowed = input<boolean>(true);
   public filterConfig = input.required<Filter[]>();
   public stepFormGroup = input.required<
     FormGroup<{
@@ -33,11 +35,11 @@ export class StepComponent {
     }>
   >();
 
+  public removeStep = output<void>();
+
   public eventsTypes = computed<string[]>(() => {
     return this.filterConfig().map((x) => x.type);
   });
-
-  constructor(private fb: FormBuilder) {}
 
   get rules(): FormArray<
     FormGroup<{

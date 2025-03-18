@@ -1,0 +1,31 @@
+:host {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 50px auto 50px;
+}
+
+header {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid var(--color-gray-light);
+
+  h1 {
+    font-size: 24px;
+    color: var(--color-gray-dark);
+  }
+}
+
+main {
+  margin: 0 auto;
+  width: 75vw;
+}
+
+footer {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid var(--color-gray-light);
+  color: var(--color-gray-dark);
+}

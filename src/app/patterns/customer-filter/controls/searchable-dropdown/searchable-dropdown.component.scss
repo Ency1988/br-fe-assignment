@@ -1,24 +1,22 @@
-
 $dropdown-item-height: 32px;
 $dropdown-search-height: 32px;
-
 
 .dropdown-control {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px 4px 8px 16px;
   height: var(--control-height);
-  box-shadow: 0 0 3px 0 rgba(0,0,0,0.75);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.75);
   gap: 8px;
   cursor: pointer;
 }
 
 .dropdown-panel {
   min-width: 250px;
-  max-height: calc($dropdown-search-height + ($dropdown-item-height * 8) + ($dropdown-item-height * 0.75));
+  max-height: calc($dropdown-search-height + ($dropdown-item-height * 8));
   padding: 8px 0;
-  box-shadow: 0 0 3px 0 rgba(0,0,0,0.75);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.75);
   border-radius: 4px;
   background-color: white;
   overflow-y: auto;
@@ -30,6 +28,8 @@ $dropdown-search-height: 32px;
     align-items: center;
     padding: 0 16px 8px 16px;
     height: $dropdown-search-height;
+    border-bottom: 1px solid var(--color-gray-light);
+    margin-bottom: 8px;
 
     .badge {
       &:empty {

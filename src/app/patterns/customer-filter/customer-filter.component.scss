@@ -11,6 +11,16 @@
   .steps-container {
     width: 100%;
     background-color: #fff;
+
+    app-step {
+      border-bottom: 1px solid var(--color-gray-light);
+    }
+
+    .add-step-container {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .discard {

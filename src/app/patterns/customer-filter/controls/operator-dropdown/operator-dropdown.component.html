@@ -4,7 +4,7 @@
   #origin="cdkOverlayOrigin"
 >
   <span>{{ value()?.value || placeholder() }}</span>
-  <span>X</span>
+  <span class="material-symbols-outlined">keyboard_arrow_down</span>
 </div>
 
 <ng-template
@@ -24,7 +24,7 @@
         [class.selected]="optionTypeToggle() === 'text'"
         (click)="optionTypeToggle.set('text')"
       >
-        <span class="type-icon">T</span>
+        <span class="material-symbols-outlined type-icon">text_fields</span>
         <span>STRING</span>
       </div>
       <div
@@ -32,7 +32,7 @@
         [class.selected]="optionTypeToggle() === 'numeric'"
         (click)="optionTypeToggle.set('numeric')"
       >
-        <span class="type-icon">#</span>
+        <span class="material-symbols-outlined type-icon">tag</span>
         <span>NUMBER</span>
       </div>
     </div>

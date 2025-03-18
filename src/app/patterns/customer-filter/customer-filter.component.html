@@ -4,11 +4,18 @@
 <div class="steps-container">
   @for (step of steps.controls; track step) {
     <app-step
+      [index]="$index + 1"
+      [isRemovalAllowed]="steps.controls.length > 1"
       [filterConfig]="filterConfig()"
       [stepFormGroup]="transformType(step)"
+      (removeStep)="removeStep($index)"
     ></app-step>
   }
-  <button (click)="addStep()">Add Funnel step</button>
+  <div class="add-step-container">
+    <button class="btn btn-accent" (click)="addStep()">
+      + ADD FUNNEL STEP
+    </button>
+  </div>
 </div>
 
 <button class="btn btn-primary" (click)="onApplyFilters()">

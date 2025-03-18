@@ -1,8 +1,44 @@
 :host {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  padding: 8px 16px;
-  gap: 32px;
+  gap: 16px;
+  padding: 16px 0;
+  margin: 16px;
+
+  &:hover .step-header .action-buttons {
+    visibility: visible;
+  }
+
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--color-gray-dark);
+
+    & > * {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-buttons {
+      visibility: hidden;
+      gap: 24px;
+    }
+
+    .material-symbols-outlined {
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--color-gray-dark);
+    }
+  }
+
+  .form-part {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+  }
 
   .rules-container {
     display: flex;
@@ -15,7 +51,7 @@
 
     .rule:first-of-type:after {
       position: absolute;
-      content: '';
+      content: "";
       width: 22px;
       height: 32px;
       left: -27px;
@@ -25,7 +61,7 @@
 
     .rule:not(:first-of-type):after {
       position: absolute;
-      content: '';
+      content: "";
       width: 13px;
       height: 48px;
       left: -17px;
@@ -37,7 +73,7 @@
 
     .rule:not(:first-of-type):before {
       position: absolute;
-      content: 'AND';
+      content: "AND";
       left: -58px;
       bottom: 6px;
       color: var(--color-gray-dark);
