@@ -12,8 +12,10 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
 import { RangeValueControlComponent } from '../../controls/range-value-control/range-value-control.component';
-
-type ControlType = 'number' | 'string' | 'numbers';
+import {
+  OperatorDropdownComponent,
+  OperatorOption,
+} from '../../controls/operator-dropdown/operator-dropdown.component';
 
 @Component({
   selector: 'app-rule',
@@ -21,16 +23,14 @@ type ControlType = 'number' | 'string' | 'numbers';
     ReactiveFormsModule,
     SearchableDropdownComponent,
     RangeValueControlComponent,
+    OperatorDropdownComponent,
   ],
   templateUrl: './rule.component.html',
   styleUrl: './rule.component.scss',
 })
 export class RuleComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
-  public operators: {
-    value: string;
-    typeOperator: ControlType;
-  }[] = [
+  public operators: OperatorOption[] = [
     { value: 'equal to', typeOperator: 'number' },
     { value: 'is between', typeOperator: 'numbers' },
     { value: 'less than', typeOperator: 'number' },
@@ -41,7 +41,7 @@ export class RuleComponent implements OnInit {
     { value: 'does not contain', typeOperator: 'string' },
   ];
 
-  public controlTypeToUse = signal<ControlType>('string');
+  public controlTypeToUse = signal<OperatorOption['typeOperator']>('string');
 
   public ruleFormGroup = input.required<
     FormGroup<{

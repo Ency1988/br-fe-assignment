@@ -1,0 +1,63 @@
+<div
+  class="operator-dropdown-control"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+>
+  <span>{{ value()?.value || placeholder() }}</span>
+  <span>X</span>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayOffsetY]="8"
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  (backdropClick)="closePanel()"
+  (detach)="closePanel()"
+>
+  <ul class="dropdown-panel">
+    <div class="operator-groups">
+      <div
+        class="operator-group"
+        [class.selected]="optionTypeToggle() === 'text'"
+        (click)="optionTypeToggle.set('text')"
+      >
+        <span class="type-icon">T</span>
+        <span>STRING</span>
+      </div>
+      <div
+        class="operator-group"
+        [class.selected]="optionTypeToggle() === 'numeric'"
+        (click)="optionTypeToggle.set('numeric')"
+      >
+        <span class="type-icon">#</span>
+        <span>NUMBER</span>
+      </div>
+    </div>
+
+    @if (optionTypeToggle() === "text") {
+      @for (option of textOptions(); track option) {
+        <li
+          role="option"
+          [class.selected]="value()?.value === option.value"
+          (click)="setValue(option)"
+        >
+          {{ option.value }}
+        </li>
+      }
+    }
+    @if (optionTypeToggle() === "numeric") {
+      @for (option of numericOptions(); track option) {
+        <li
+          role="option"
+          [class.selected]="value()?.value === option.value"
+          (click)="setValue(option)"
+        >
+          {{ option.value }}
+        </li>
+      }
+    }
+  </ul>
+</ng-template>

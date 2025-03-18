@@ -44,13 +44,15 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
   public isOpen = model(false);
   public value = signal<string | null>('');
 
-  private clearSearchQueryEffect = effect(() => {
-    if (!this.isOpen()) {
-      untracked(() => {
-        this.filterQuery.set('');
-      });
-    }
-  });
+  constructor() {
+    effect(() => {
+      if (!this.isOpen()) {
+        untracked(() => {
+          this.filterQuery.set('');
+        });
+      }
+    });
+  }
 
   protected valueChange: (value: string | null) => void = () => {};
   protected onTouched = () => {};
@@ -64,9 +66,6 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
   registerOnTouched(fn: typeof this.onTouched): void {
     this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
-    // TODO: Handle disabled state
-  }
 
   markAsTouched() {
     if (!this.isOpen()) {
@@ -76,7 +75,7 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
 
   public setValue(option: string) {
     this.value.set(option);
-    this.isOpen.set(false);
+    this.closePanel();
     this.valueChange(option);
   }
 
@@ -86,7 +85,7 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
   }
 
   closePanel() {
-    this.markAsTouched();
     this.isOpen.set(false);
+    this.markAsTouched();
   }
 }

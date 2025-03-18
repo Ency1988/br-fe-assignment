@@ -10,11 +10,8 @@
   </app-searchable-dropdown>
 
   @if (ruleFormGroup().controls["field"].value) {
-    <select formControlName="operator">
-      @for (operator of operators; track operator) {
-        <option [value]="operator.value">{{ operator.value }}</option>
-      }
-    </select>
+    <app-operator-dropdown [options]="operators" formControlName="operator">
+    </app-operator-dropdown>
 
     @switch (controlTypeToUse()) {
       @case ("string") {
