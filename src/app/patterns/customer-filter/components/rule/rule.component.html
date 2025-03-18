@@ -23,7 +23,11 @@
       @case ("number") {
         <input type="number" formControlName="value" />
       }
-      @case ("numbers") {}
+      @case ("numbers") {
+        <app-range-value-control
+          formControlName="value"
+        ></app-range-value-control>
+      }
     }
   }
   <button class="remove-rule" type="button" (click)="removeRule.emit()">

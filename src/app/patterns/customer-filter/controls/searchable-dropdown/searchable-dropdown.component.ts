@@ -70,7 +70,6 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
 
   markAsTouched() {
     if (!this.isOpen()) {
-      console.log('markAsTouched');
       this.onTouched();
     }
   }

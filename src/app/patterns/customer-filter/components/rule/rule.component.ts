@@ -11,12 +11,17 @@ import {
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
+import { RangeValueControlComponent } from '../../controls/range-value-control/range-value-control.component';
 
 type ControlType = 'number' | 'string' | 'numbers';
 
 @Component({
   selector: 'app-rule',
-  imports: [ReactiveFormsModule, SearchableDropdownComponent],
+  imports: [
+    ReactiveFormsModule,
+    SearchableDropdownComponent,
+    RangeValueControlComponent,
+  ],
   templateUrl: './rule.component.html',
   styleUrl: './rule.component.scss',
 })
@@ -75,6 +80,7 @@ export class RuleComponent implements OnInit {
             this.supportedAttributes().find((x) => x.property === v)?.type!;
           const defaultValue =
             expectedAttributeType === 'string' ? 'equals' : 'equal to';
+          console.log('setDefaultValueForOperator', defaultValue);
           this.ruleFormGroup().get('operator')?.setValue(defaultValue);
         }
       });
@@ -94,11 +100,12 @@ export class RuleComponent implements OnInit {
 
           // TODO: Extract default value setting into custom control
           if (operatorType === 'string') {
+            console.log('setDefaultValueForField String');
             valueField.setValue('');
+            console.log('setDefaultValueForField Number');
           } else if (operatorType === 'number') {
-            valueField.setValue(0);
+            // valueField.setValue(0);
           }
-          // TODO: Numbers
           this.controlTypeToUse.set(operatorType);
         }
       });
