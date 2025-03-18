@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import type { Filter } from '../../core/models/filter.model';
 import type { Step } from '../../core/models/condition.model';
-import { StepComponent } from '../components/step/step.component';
+import { StepComponent } from './components/step/step.component';
 import {
   FormArray,
   FormBuilder,

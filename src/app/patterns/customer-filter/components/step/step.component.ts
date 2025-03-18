@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RuleComponent } from '../rule/rule.component';
-import type { Filter } from '../../../core/models/filter.model';
+import type { Filter } from '../../../../core/models/filter.model';
 import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
