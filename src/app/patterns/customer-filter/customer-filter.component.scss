@@ -8,6 +8,10 @@
   border-radius: 8px;
   gap: 16px;
 
+  .filter-title {
+    color: var(--color-gray-dark);
+  }
+
   .steps-container {
     width: 100%;
     background-color: #fff;

@@ -1,5 +1,7 @@
-<div>CUSTOMER FILTER</div>
-<button class="btn btn-danger discard">Discard filters</button>
+<div class="filter-title">CUSTOMER FILTER</div>
+<button class="btn btn-danger discard" (click)="discardFilters()">
+  Discard filters
+</button>
 
 <div class="steps-container">
   @for (step of steps.controls; track step) {

@@ -65,4 +65,10 @@ export class CustomerFilterComponent {
   removeStep(stepIndex: number) {
     this.steps.removeAt(stepIndex);
   }
+
+  discardFilters() {
+    this.stepsForm = this.fb.group({
+      steps: this.fb.array([this.createStep()]),
+    });
+  }
 }
