@@ -1,5 +1,5 @@
 <div>Filters</div>
 <app-customer-filter
-  [filterConfig]="filterConfig()"
+  [filterConfig]="filters | async"
   (applyFilters)="showFilters($event)"
 ></app-customer-filter>

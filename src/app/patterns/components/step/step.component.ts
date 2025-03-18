@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RuleComponent } from '../rule/rule.component';
+import type { Filter } from '../../../core/models/filter.model';
 
 @Component({
   selector: 'app-step',
@@ -17,24 +18,51 @@ import { RuleComponent } from '../rule/rule.component';
   styleUrl: './step.component.scss',
 })
 export class StepComponent {
-  public eventsMap = input.required<Record<string, string[]>>();
-  public stepFormGroup = input.required<FormGroup>();
+  public filterConfig = input.required<Filter[]>();
+  public stepFormGroup = input.required<
+    FormGroup<{
+      eventType: FormControl;
+      rules: FormArray<
+        FormGroup<{
+          field: FormControl<string | null>;
+          operator: FormControl<string | null>;
+          value: FormControl<string | null>;
+        }>
+      >;
+    }>
+  >();
 
   public eventsTypes = computed<string[]>(() => {
-    return Object.keys(this.eventsMap());
+    return this.filterConfig().map((x) => x.type);
   });
 
   constructor(private fb: FormBuilder) {}
 
-  get rules(): FormArray {
-    return this.stepFormGroup()!.get('rules') as FormArray;
+  get rules(): FormArray<
+    FormGroup<{
+      field: FormControl<string | null>;
+      operator: FormControl<string | null>;
+      value: FormControl<string | null>;
+    }>
+  > {
+    return this.stepFormGroup()!.get('rules') as FormArray<
+      FormGroup<{
+        field: FormControl<string | null>;
+        operator: FormControl<string | null>;
+        value: FormControl<string | null>;
+      }>
+    >;
   }
 
-  createRule(): FormGroup {
-    return this.fb.group({
-      field: ['', Validators.required],
-      operator: ['', Validators.required],
-      value: ['', Validators.required],
+  createRule(): FormGroup<{
+    field: FormControl<string | null>;
+    operator: FormControl<string | null>;
+    value: FormControl<string | null>;
+  }> {
+    return new FormGroup({
+      field: new FormControl('', [Validators.required]),
+      operator: new FormControl('', [Validators.required]),
+      value: new FormControl('', [Validators.required]),
     });
   }
 
@@ -56,6 +84,7 @@ export class StepComponent {
   getAttributesForEvent() {
     const selectedEvent = this.stepFormGroup().get('eventType')
       ?.value as string;
-    return this.eventsMap()[selectedEvent];
+    return this.filterConfig().find((c) => c.type === selectedEvent)!
+      .properties;
   }
 }

@@ -1,17 +1,25 @@
 <ng-container [formGroup]="ruleFormGroup()">
   <select formControlName="field">
     <option disabled value>Select an attribute</option>
-    @for (attribute of supportedAttributes(); track attribute) {
-      <option [value]="attribute">{{ attribute }}</option>
+    @for (attribute of supportedAttributes(); track attribute.property) {
+      <option [value]="attribute.property">{{ attribute.property }}</option>
     }
   </select>
 
   <select formControlName="operator">
-    <option value="=">=</option>
-    <option value="!=">!=</option>
-    <option value=">">></option>
-    <option value="<"><</option>
+    @for (operator of operators; track operator) {
+      <option [value]="operator.value">{{ operator.value }}</option>
+    }
   </select>
-  <input formControlName="value" placeholder="Value" />
+
+  @switch (controlTypeToUse()) {
+    @case ("string") {
+      <input formControlName="value" placeholder="Value" />
+    }
+    @case ("number") {
+      <input type="number" formControlName="value" />
+    }
+    @case ("numbers") {}
+  }
   <button type="button" (click)="removeRule.emit()">Remove</button>
 </ng-container>

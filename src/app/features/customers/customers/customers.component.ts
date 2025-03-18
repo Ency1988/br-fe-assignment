@@ -1,20 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { CustomersRepository } from '../../../core/customers/customers.repository';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CustomerFilterComponent } from '../../../patterns/customer-filter/customer-filter.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-customers',
-  imports: [CustomerFilterComponent],
+  imports: [CustomerFilterComponent, AsyncPipe],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   providers: [CustomersRepository],
 })
 export class CustomersComponent {
-  public customerRepository = inject(CustomersRepository);
-  public filterConfig = toSignal(this.customerRepository.getFilterConfigData());
+  private customerRepository = inject(CustomersRepository);
 
+  public filters = this.customerRepository.getFilterConfigData();
   public showFilters(filters: any) {
-    console.log();
+    console.log(filters);
   }
 }

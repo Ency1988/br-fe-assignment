@@ -15,7 +15,7 @@
           <div [formGroupName]="$index">
             <app-rule
               (removeRule)="removeRule($index)"
-              [ruleFormGroup]="rules.controls.at($index)"
+              [ruleFormGroup]="rules.controls.at($index)!"
               [supportedAttributes]="getAttributesForEvent()"
             ></app-rule>
           </div>

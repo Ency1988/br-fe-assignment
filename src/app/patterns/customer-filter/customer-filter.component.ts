@@ -1,4 +1,4 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import type { Filter } from '../../core/models/filter.model';
 import type { Step } from '../../core/models/condition.model';
 import { StepComponent } from '../components/step/step.component';
@@ -18,23 +18,10 @@ import {
   styleUrl: './customer-filter.component.scss',
 })
 export class CustomerFilterComponent {
-  public filterConfig = input<Filter[]>();
-  public applyFilters = output<Step[]>();
-
-  public eventTypes = computed<Record<string, string[]>>(() => {
-    const config = this.filterConfig();
-    let result = {};
-    if (Array.isArray(config) && config.length > 0) {
-      result = config.reduce(
-        (acc, current) => {
-          acc[current.type] = current.properties.map((p) => p.property);
-          return acc;
-        },
-        {} as Record<string, string[]>,
-      );
-    }
-    return result;
+  public filterConfig = input.required<Filter[], Filter[] | null>({
+    transform: (x) => (!!x ? x : []),
   });
+  public applyFilters = output<Step[]>();
 
   public stepsForm: FormGroup;
 
