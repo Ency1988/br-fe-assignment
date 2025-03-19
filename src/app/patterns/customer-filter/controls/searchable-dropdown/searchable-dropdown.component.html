@@ -25,7 +25,11 @@
       </div>
     }
     @for (option of filteredOptions(); track option) {
-      <li [class.selected]="value() === option" (click)="setValue(option)">
+      <li
+        class="dropdown-option"
+        [class.selected]="value() === option"
+        (click)="setValue(option)"
+      >
         {{ option }}
       </li>
     }
