@@ -1,4 +1,11 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RuleComponent } from '../rule/rule.component';
 import type { Filter } from '../../../../core/models/filter.model';
@@ -14,6 +21,7 @@ import {
   imports: [ReactiveFormsModule, RuleComponent, SearchableDropdownComponent],
   templateUrl: './step.component.html',
   styleUrl: './step.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepComponent {
   private cfs = inject(CustomerFilterService);
@@ -30,11 +38,11 @@ export class StepComponent {
     return this.filterConfig().map((x) => x.type);
   });
 
-  get rules(): FormArray<FormGroup<RuleFormGroup>> {
+  public get rules(): FormArray<FormGroup<RuleFormGroup>> {
     return this.cfs.getRulesForStepGroup(this.stepFormGroup());
   }
 
-  get hasRules(): boolean {
+  public get hasRules(): boolean {
     return this.cfs.getRulesForStepGroup(this.stepFormGroup()).length > 0;
   }
 

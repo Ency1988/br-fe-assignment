@@ -1,12 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { ChangeDetectorRef, inject, Injectable } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  isFormGroup,
   Validators,
 } from '@angular/forms';
+import { OperatorOption } from './controls/operator-dropdown/operator-dropdown.component';
 
 export interface RuleFormGroup {
   field: FormControl<string | null>;
@@ -26,6 +26,18 @@ export type CustomerFilterFormGroup = FormGroup<{
 @Injectable()
 export class CustomerFilterService {
   private fb = inject(FormBuilder);
+  private cdr = inject(ChangeDetectorRef);
+
+  public readonly operators: OperatorOption[] = [
+    { value: 'equal to', typeOperator: 'number' },
+    { value: 'is between', typeOperator: 'numbers' },
+    { value: 'less than', typeOperator: 'number' },
+    { value: 'greater then', typeOperator: 'number' },
+    { value: 'equals', typeOperator: 'string' },
+    { value: 'does not equal', typeOperator: 'string' },
+    { value: 'contains', typeOperator: 'string' },
+    { value: 'does not contain', typeOperator: 'string' },
+  ];
 
   public customerFilterFormGroup: CustomerFilterFormGroup = this.getEmptyForm();
 
@@ -37,16 +49,19 @@ export class CustomerFilterService {
 
   public addEmptyStep(): void {
     this.steps.push(this.createEmptyStep());
+    this.cdr.markForCheck();
   }
 
   public removeStepAt(stepIndex: number) {
     this.steps.removeAt(stepIndex);
+    this.cdr.markForCheck();
   }
 
   public discardFilters() {
     this.customerFilterFormGroup = this.fb.group({
       steps: this.fb.array([this.createEmptyStep()]),
     });
+    this.cdr.markForCheck();
   }
 
   copyStepAt(indexOfStep: number) {
@@ -65,6 +80,7 @@ export class CustomerFilterService {
       ),
     });
     this.steps.push(newStep);
+    this.cdr.markForCheck();
   }
 
   public createEmptyStep(): FormGroup<StepGroup> {
@@ -96,6 +112,7 @@ export class CustomerFilterService {
 
   public addRuleForStepGroup(stepGroup: FormGroup<StepGroup>): void {
     this.getRulesForStepGroup(stepGroup).push(this.createRule());
+    this.cdr.markForCheck();
   }
 
   public removeRuleAtForStepGroup(
@@ -103,5 +120,6 @@ export class CustomerFilterService {
     indexOfRule: number,
   ): void {
     this.getRulesForStepGroup(stepGroup).removeAt(indexOfRule);
+    this.cdr.markForCheck();
   }
 }

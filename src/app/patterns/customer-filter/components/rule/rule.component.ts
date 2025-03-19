@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   computed,
   DestroyRef,
@@ -17,6 +19,10 @@ import {
   OperatorOption,
 } from '../../controls/operator-dropdown/operator-dropdown.component';
 import { startWith } from 'rxjs';
+import {
+  CustomerFilterService,
+  RuleFormGroup,
+} from '../../customer-filter.service';
 
 @Component({
   selector: 'app-rule',
@@ -28,32 +34,16 @@ import { startWith } from 'rxjs';
   ],
   templateUrl: './rule.component.html',
   styleUrl: './rule.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RuleComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
-  public operators: OperatorOption[] = [
-    { value: 'equal to', typeOperator: 'number' },
-    { value: 'is between', typeOperator: 'numbers' },
-    { value: 'less than', typeOperator: 'number' },
-    { value: 'greater then', typeOperator: 'number' },
-    { value: 'equals', typeOperator: 'string' },
-    { value: 'does not equal', typeOperator: 'string' },
-    { value: 'contains', typeOperator: 'string' },
-    { value: 'does not contain', typeOperator: 'string' },
-  ];
+  private cdr = inject(ChangeDetectorRef);
+  public cfs = inject(CustomerFilterService);
 
   public controlTypeToUse = signal<OperatorOption['typeOperator']>('string');
-
-  public ruleFormGroup = input.required<
-    FormGroup<{
-      field: FormControl<string | null>;
-      operator: FormControl<string | null>;
-      value: FormControl<string | number | null>;
-    }>
-  >();
-
+  public ruleFormGroup = input.required<FormGroup<RuleFormGroup>>();
   public parentEvent = input<string | null>(null);
-
   public supportedAttributes =
     input.required<{ type: 'string' | 'number'; property: string }[]>();
 
@@ -78,14 +68,17 @@ export class RuleComponent implements OnInit {
         startWith(this.ruleFormGroup().value.field),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((v) => {
-        if (v) {
-          const expectedAttributeType: 'string' | 'number' =
-            this.supportedAttributes().find((x) => x.property === v)?.type!;
+      .subscribe((fieldValue) => {
+        if (fieldValue) {
+          const expectedAttributeType: 'string' | 'number' | undefined =
+            this.supportedAttributes().find(
+              (x) => x.property === fieldValue,
+            )?.type;
           const defaultValue =
             expectedAttributeType === 'string' ? 'equals' : 'equal to';
           if (!this.ruleFormGroup().value.operator) {
             this.ruleFormGroup().get('operator')?.setValue(defaultValue);
+            this.cdr.markForCheck();
           }
         }
       });
@@ -98,7 +91,7 @@ export class RuleComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((operatorValue) => {
-        const operatorType = this.operators.find(
+        const operatorType = this.cfs.operators.find(
           (o) => o.value === operatorValue,
         )?.typeOperator;
         if (operatorType && operatorValue !== this.controlTypeToUse()) {

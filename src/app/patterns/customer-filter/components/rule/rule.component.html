@@ -9,7 +9,7 @@
   </app-searchable-dropdown>
 
   @if (ruleFormGroup().controls["field"].value) {
-    <app-operator-dropdown [options]="operators" formControlName="operator">
+    <app-operator-dropdown [options]="cfs.operators" formControlName="operator">
     </app-operator-dropdown>
 
     @switch (controlTypeToUse()) {
