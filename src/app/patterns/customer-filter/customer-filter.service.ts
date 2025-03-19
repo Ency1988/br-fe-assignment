@@ -43,13 +43,6 @@ export class CustomerFilterService {
     this.steps.removeAt(stepIndex);
   }
 
-  public transformType(control: unknown): FormGroup {
-    if (isFormGroup(control)) {
-      return control;
-    }
-    throw Error('control must be an Group');
-  }
-
   public discardFilters() {
     this.customerFilterFormGroup = this.fb.group({
       steps: this.fb.array([this.createEmptyStep()]),
@@ -85,5 +78,30 @@ export class CustomerFilterService {
     return this.fb.group({
       steps: this.fb.array([this.createEmptyStep()]),
     });
+  }
+
+  public createRule(): FormGroup<RuleFormGroup> {
+    return new FormGroup({
+      field: new FormControl<string | null>('', [Validators.required]),
+      operator: new FormControl<string | null>('', [Validators.required]),
+      value: new FormControl<string | number | null>('', [Validators.required]),
+    });
+  }
+
+  public getRulesForStepGroup(
+    stepGroup: FormGroup<StepGroup>,
+  ): FormArray<FormGroup<RuleFormGroup>> {
+    return stepGroup.controls['rules'];
+  }
+
+  public addRuleForStepGroup(stepGroup: FormGroup<StepGroup>): void {
+    this.getRulesForStepGroup(stepGroup).push(this.createRule());
+  }
+
+  public removeRuleAtForStepGroup(
+    stepGroup: FormGroup<StepGroup>,
+    indexOfRule: number,
+  ): void {
+    this.getRulesForStepGroup(stepGroup).removeAt(indexOfRule);
   }
 }

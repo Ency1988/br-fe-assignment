@@ -1,17 +1,13 @@
-import { Component, computed, input, output } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  isFormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, computed, inject, input, output } from '@angular/core';
+import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RuleComponent } from '../rule/rule.component';
 import type { Filter } from '../../../../core/models/filter.model';
 import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
-import { RuleFormGroup, StepGroup } from '../../customer-filter.service';
+import {
+  CustomerFilterService,
+  RuleFormGroup,
+  StepGroup,
+} from '../../customer-filter.service';
 
 @Component({
   selector: 'app-step',
@@ -20,6 +16,8 @@ import { RuleFormGroup, StepGroup } from '../../customer-filter.service';
   styleUrl: './step.component.scss',
 })
 export class StepComponent {
+  private cfs = inject(CustomerFilterService);
+
   public index = input<number | null>(null);
   public isRemovalAllowed = input<boolean>(true);
   public filterConfig = input.required<Filter[]>();
@@ -33,36 +31,26 @@ export class StepComponent {
   });
 
   get rules(): FormArray<FormGroup<RuleFormGroup>> {
-    return this.stepFormGroup().controls['rules'];
+    return this.cfs.getRulesForStepGroup(this.stepFormGroup());
   }
 
-  createRule(): FormGroup<RuleFormGroup> {
-    return new FormGroup({
-      field: new FormControl<string | null>('', [Validators.required]),
-      operator: new FormControl<string | null>('', [Validators.required]),
-      value: new FormControl<string | number | null>('', [Validators.required]),
-    });
+  get hasRules(): boolean {
+    return this.cfs.getRulesForStepGroup(this.stepFormGroup()).length > 0;
   }
 
-  addRule(): void {
-    this.rules.push(this.createRule());
+  public addRule() {
+    this.cfs.addRuleForStepGroup(this.stepFormGroup());
   }
 
-  removeRule(index: number): void {
-    this.rules.removeAt(index);
+  public removeRule(index: number) {
+    this.cfs.removeRuleAtForStepGroup(this.stepFormGroup(), index);
   }
 
-  public transformType(control: unknown): FormControl {
-    if (isFormControl(control)) {
-      return control;
-    }
-    throw Error('control must be an Control');
-  }
-
-  getAttributesForEvent() {
-    const selectedEvent = this.stepFormGroup().get('eventType')
-      ?.value as string;
-    return this.filterConfig().find((c) => c.type === selectedEvent)!
-      .properties;
+  public getAttributesForEvent() {
+    const selectedEventType = this.stepFormGroup().getRawValue().eventType;
+    return (
+      this.filterConfig().find((c) => c.type === selectedEventType)
+        ?.properties || []
+    );
   }
 }
