@@ -16,6 +16,7 @@ import {
   OperatorDropdownComponent,
   OperatorOption,
 } from '../../controls/operator-dropdown/operator-dropdown.component';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-rule',
@@ -73,14 +74,19 @@ export class RuleComponent implements OnInit {
 
   private setDefaultOperatorAfterFieldChange() {
     this.ruleFormGroup()
-      .controls['field'].valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .controls['field'].valueChanges.pipe(
+        startWith(this.ruleFormGroup().value.field),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe((v) => {
         if (v) {
           const expectedAttributeType: 'string' | 'number' =
             this.supportedAttributes().find((x) => x.property === v)?.type!;
           const defaultValue =
             expectedAttributeType === 'string' ? 'equals' : 'equal to';
-          this.ruleFormGroup().get('operator')?.setValue(defaultValue);
+          if (!this.ruleFormGroup().value.operator) {
+            this.ruleFormGroup().get('operator')?.setValue(defaultValue);
+          }
         }
       });
   }
@@ -88,6 +94,7 @@ export class RuleComponent implements OnInit {
   private selectValueFieldAfterOperatorChangeSideEffect() {
     this.ruleFormGroup()
       .controls['operator'].valueChanges.pipe(
+        startWith(this.ruleFormGroup().value.operator),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((operatorValue) => {
@@ -95,13 +102,6 @@ export class RuleComponent implements OnInit {
           (o) => o.value === operatorValue,
         )?.typeOperator;
         if (operatorType && operatorValue !== this.controlTypeToUse()) {
-          const valueField = this.ruleFormGroup().controls['value'];
-
-          if (operatorType === 'string') {
-            valueField.setValue('');
-          } else if (operatorType === 'number') {
-            valueField.setValue(0);
-          }
           this.controlTypeToUse.set(operatorType);
         }
       });

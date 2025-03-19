@@ -45,6 +45,9 @@ export class OperatorDropdownComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     const option = this.options().find((o) => o.value === value);
+    this.optionTypeToggle.set(
+      option?.typeOperator === 'string' ? 'text' : 'numeric',
+    );
     this.value.set(option);
   }
   registerOnChange(fn: typeof this.valueChange): void {
