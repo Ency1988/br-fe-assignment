@@ -52,7 +52,7 @@ export class RuleComponent implements OnInit {
     }>
   >();
 
-  public parentEvent = input<string>();
+  public parentEvent = input<string | null>(null);
 
   public supportedAttributes =
     input.required<{ type: 'string' | 'number'; property: string }[]>();

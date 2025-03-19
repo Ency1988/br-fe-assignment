@@ -39,7 +39,7 @@
               (removeRule)="removeRule($index)"
               [ruleFormGroup]="rules.controls.at($index)!"
               [supportedAttributes]="getAttributesForEvent()"
-              [parentEvent]="stepFormGroup().value.eventType"
+              [parentEvent]="stepFormGroup().getRawValue().eventType"
             ></app-rule>
           </ng-container>
         }

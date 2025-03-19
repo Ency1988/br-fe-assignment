@@ -29,7 +29,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class SearchableDropdownComponent implements ControlValueAccessor {
   public placeholder = input<string>('Select value');
   public filterPlaceholder = input<string>('Filter value');
-  parentBadge = input<string | undefined>();
+  parentBadge = input<string | null>(null);
 
   public options = input<string[]>([]);
   public filterQuery = signal('');

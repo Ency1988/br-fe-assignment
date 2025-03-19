@@ -4,18 +4,18 @@
 </button>
 
 <div class="steps-container">
-  @for (step of steps.controls; track step) {
+  @for (stepControl of cfs.steps.controls; track stepControl) {
     <app-step
       [index]="$index + 1"
-      [isRemovalAllowed]="steps.controls.length > 1"
+      [isRemovalAllowed]="isRemovalAllowed"
       [filterConfig]="filterConfig()"
-      [stepFormGroup]="transformType(step)"
+      [stepFormGroup]="stepControl"
       (removeStep)="removeStep($index)"
       (copyStep)="copyStep($index)"
     ></app-step>
   }
   <div class="add-step-container">
-    <button class="btn btn-accent" (click)="addStep()">
+    <button class="btn btn-accent" (click)="addEmptyStep()">
       + ADD FUNNEL STEP
     </button>
   </div>
