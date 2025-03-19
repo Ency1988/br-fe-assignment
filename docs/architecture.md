@@ -45,7 +45,7 @@ By analyzing dependencies with Madge, we can identify circular dependencies, imp
 ## Places for improvements
 
 - Enforcing clean architecture via ESLint
-- Better test coverage
+- Unit tests
 - Responsiveness
 - Accessibility
 - Zoneless approach
