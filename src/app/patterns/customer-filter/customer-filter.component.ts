@@ -6,10 +6,20 @@ import {
   output,
 } from '@angular/core';
 import type { Filter } from '../../core/models/filter.model';
-import type { Step } from '../../core/models/condition.model';
 import { StepComponent } from './components/step/step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterService } from './customer-filter.service';
+
+export interface FilterValue {
+  steps: {
+    eventType: string | null;
+    rules: {
+      field: string | null;
+      operator: string | null;
+      value: string | number | null;
+    }[];
+  }[];
+}
 
 @Component({
   selector: 'app-customer-filter',
@@ -21,9 +31,9 @@ import { CustomerFilterService } from './customer-filter.service';
 })
 export class CustomerFilterComponent {
   public filterConfig = input.required<Filter[], Filter[] | null>({
-    transform: (x) => (!!x ? x : []),
+    transform: (x) => (x ? x : []),
   });
-  public applyFilters = output<Step[]>();
+  public applyFilters = output<FilterValue>();
 
   public cfs = inject(CustomerFilterService);
 
@@ -48,7 +58,7 @@ export class CustomerFilterComponent {
   }
 
   public onApplyFilters() {
-    console.log('RESULT');
-    console.log(this.cfs.customerFilterFormGroup.value);
+    const filterValue = this.cfs.customerFilterFormGroup.getRawValue();
+    this.applyFilters.emit(filterValue);
   }
 }

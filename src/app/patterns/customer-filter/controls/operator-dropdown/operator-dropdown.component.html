@@ -40,7 +40,6 @@
     @if (optionTypeToggle() === "text") {
       @for (option of textOptions(); track option) {
         <li
-          role="option"
           [class.selected]="value()?.value === option.value"
           (click)="setValue(option)"
         >
@@ -51,7 +50,6 @@
     @if (optionTypeToggle() === "numeric") {
       @for (option of numericOptions(); track option) {
         <li
-          role="option"
           [class.selected]="value()?.value === option.value"
           (click)="setValue(option)"
         >

@@ -36,7 +36,7 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
 
   public filteredOptions = computed<string[]>(() => {
     const filterQuery = this.filterQuery();
-    return !!filterQuery
+    return filterQuery
       ? this.options().filter((option) => option.includes(filterQuery))
       : this.options();
   });
@@ -54,8 +54,12 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
     });
   }
 
-  protected valueChange: (value: string | null) => void = () => {};
-  protected onTouched = () => {};
+  protected valueChange: (value: string | null) => void = () => {
+    /* No-op function */
+  };
+  protected onTouched = () => {
+    /* No-op function */
+  };
 
   writeValue(value: string | null): void {
     this.value.set(value);
@@ -80,7 +84,7 @@ export class SearchableDropdownComponent implements ControlValueAccessor {
   }
 
   handleFilterChange(inputEvent: Event) {
-    let filterValue = (inputEvent.target as HTMLInputElement).value;
+    const filterValue = (inputEvent.target as HTMLInputElement).value;
     this.filterQuery.set(filterValue);
   }
 

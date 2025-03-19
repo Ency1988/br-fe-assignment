@@ -40,8 +40,12 @@ export class OperatorDropdownComponent implements ControlValueAccessor {
 
   protected optionTypeToggle = signal<'numeric' | 'text'>('text');
 
-  protected onTouched = () => {};
-  protected valueChange: (value: string | null) => void = () => {};
+  protected onTouched = () => {
+    /* No-op function */
+  };
+  protected valueChange: (value: string | null) => void = () => {
+    /* No-op function */
+  };
 
   writeValue(value: string): void {
     const option = this.options().find((o) => o.value === value);

@@ -25,11 +25,7 @@
       </div>
     }
     @for (option of filteredOptions(); track option) {
-      <li
-        role="option"
-        [class.selected]="value() === option"
-        (click)="setValue(option)"
-      >
+      <li [class.selected]="value() === option" (click)="setValue(option)">
         {{ option }}
       </li>
     }

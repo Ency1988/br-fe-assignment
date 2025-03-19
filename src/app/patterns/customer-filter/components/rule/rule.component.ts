@@ -10,7 +10,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchableDropdownComponent } from '../../controls/searchable-dropdown/searchable-dropdown.component';
 import { RangeValueControlComponent } from '../../controls/range-value-control/range-value-control.component';

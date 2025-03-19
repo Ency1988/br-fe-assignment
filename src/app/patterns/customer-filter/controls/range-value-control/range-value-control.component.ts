@@ -42,8 +42,12 @@ export class RangeValueControlComponent
       });
   }
 
-  private onTouched = (): void => {};
-  protected valueChange: (value: [number, number]) => void = () => {};
+  private onTouched = (): void => {
+    /* No-op function */
+  };
+  protected valueChange: (value: [number, number]) => void = () => {
+    /* No-op function */
+  };
 
   writeValue(newValue: [number, number]): void {
     this.fromControl.setValue(newValue[0] || 0, { emitEvent: false });
@@ -54,7 +58,7 @@ export class RangeValueControlComponent
     this.valueChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: typeof this.onTouched): void {
     this.onTouched = fn;
   }
 
